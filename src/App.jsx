@@ -1,13 +1,33 @@
+import { useState, useEffect } from 'react'
+import Question from './components/Question'
 import './index.css'
-import { Route, Routes } from 'react-router'
 
-function App() {
+const App = () => {
+   const [currentQuestion, setCurrentQuestions] = useState(0)
+   const [quizData, setQuizData] = useState([])
+
+   useEffect(() => {
+      fetchData()
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [])
+
+   const fetchData = async () => {
+      try {
+         const response = await fetch('src/data.json')
+
+         var data = await response.json()
+
+         setQuizData(data)
+      } catch (error) {
+         console.error('Error:', error)
+      }
+   }
+
    return (
       <>
-         <Routes>
-            <Route path='/' element={<Page1 />}></Route>
-            <Route path='/page2' element={<Page2 />}></Route>
-         </Routes>
+         <div>
+            <Question data={quizData[currentQuestion]} />
+         </div>
       </>
    )
 }
