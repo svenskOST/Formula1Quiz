@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import Question from './components/Question'
 import './index.css'
 
-const App = () => {
+function App() {
    const [currentQuestion, setCurrentQuestions] = useState(0)
    const [quizData, setQuizData] = useState([])
 
@@ -25,8 +25,15 @@ const App = () => {
 
    return (
       <>
-         <div>
-            <Question data={quizData[currentQuestion]} />
+         <div className='flex min-h-screen flex-col justify-center bg-gray-50 py-6 sm:py-12'>
+            <img
+               src='src/assets/grid.avif'
+               className='absolute h-full w-full'
+            />
+            <Question
+               data={quizData[currentQuestion]}
+               handleSubmit={setCurrentQuestions}
+            />
          </div>
       </>
    )
