@@ -1,4 +1,4 @@
-const Option = (text) => {
+function Option({ text }) {
    return <button>{text}</button>
 }
 
