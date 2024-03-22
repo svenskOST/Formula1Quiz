@@ -102,11 +102,11 @@
       "options": [
          {
             "id": 1,
-            "text": "Eau Rouge"
+            "text": "Corner of Champions"
          },
          {
             "id": 2,
-            "text": "Corner of Champions"
+            "text": "Eau Rouge"
          },
          {
             "id": 3,
@@ -117,7 +117,7 @@
             "text": "Parabolica"
          }
       ],
-      "answer": 1
+      "answer": 2
    },
    {
       "id": 6,
@@ -126,11 +126,11 @@
       "options": [
          {
             "id": 1,
-            "text": "1 kg"
+            "text": "4 kg"
          },
          {
             "id": 2,
-            "text": "4 kg"
+            "text": "1 kg"
          },
          {
             "id": 3,
@@ -141,7 +141,7 @@
             "text": "2 kg"
          }
       ],
-      "answer": 2
+      "answer": 1
    },
    {
       "id": 7,
@@ -193,32 +193,48 @@
    },
    {
       "id": 9,
-      "question": "",
-      "img": "",
+      "question": "What was the nickname of swedish F1 driver Ronnie Peterson?",
+      "img": "question9.webp",
       "options": [
          {
             "id": 1,
-            "text": ""
+            "text": "The Flying Swede"
          },
          {
             "id": 2,
-            "text": ""
+            "text": "The SuperSwede"
+         },
+         {
+            "id": 3,
+            "text": "The Welfare Man"
+         },
+         {
+            "id": 4,
+            "text": "The SpeedySwede"
          }
       ],
-      "answer": 1
+      "answer": 2
    },
    {
       "id": 10,
-      "question": "",
-      "img": "",
+      "question": "What was this 6-wheeled F1 car called?",
+      "img": "question10.webp",
       "options": [
          {
             "id": 1,
-            "text": ""
+            "text": "Tyrell P34"
          },
          {
             "id": 2,
-            "text": ""
+            "text": "Prototype MP4"
+         },
+         {
+            "id": 3,
+            "text": "RB16"
+         },
+         {
+            "id": 4,
+            "text": "SF1000"
          }
       ],
       "answer": 1
