@@ -3,7 +3,7 @@ import Option from './Option'
 
 function Question({ question, handleClick }) {
    return (
-      <div className='flex h-full w-full flex-col items-center justify-center'>
+      <>
          <h1 className='w-fit rounded-xl bg-[rgba(0,0,0,0.5)] px-6 py-3 text-center text-2xl font-[600] text-gray-200 sm:bg-[transparent] sm:p-0 sm:text-black'>
             {question.question}
          </h1>
@@ -23,7 +23,7 @@ function Question({ question, handleClick }) {
                />
             ))}
          </div>
-      </div>
+      </>
    )
 }
 
