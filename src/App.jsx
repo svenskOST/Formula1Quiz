@@ -3,28 +3,24 @@ import Question from './components/Question'
 import './index.css'
 
 function App() {
-   const [stage, setStage] = useState(1)
+   const [questions, setQuestions] = useState([])
    const [name, setName] = useState('')
    const [notifyName, setNotifyName] = useState(false)
-   const [currentQuestion, setCurrentQuestion] = useState(1)
-   const [questions, setQuestions] = useState([])
+   const [currentQuestion, setCurrentQuestion] = useState(0)
 
    useEffect(() => {
-      fetchQuestions()
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [])
-
-   const fetchQuestions = async () => {
-      try {
-         const response = await fetch('src/questions.json')
-
-         var questions = await response.json()
-
-         setQuestions(questions)
-      } catch (error) {
-         console.error('Error:', error)
+      const fetchQuestions = async () => {
+         try {
+            const response = await fetch('src/questions.json')
+            var questions = await response.json()
+            setQuestions(questions)
+         } catch (error) {
+            console.error('Error:', error)
+         }
       }
-   }
+
+      fetchQuestions()
+   }, [])
 
    const handleChange = (e) => {
       setName(e.target.value)
@@ -42,7 +38,12 @@ function App() {
          return
       }
 
-      setStage(2)
+      const introForm = document.getElementById('introForm')
+      introForm.style.opacity = 0
+      setTimeout(() => {
+         introForm.style.display = 'none'
+         setCurrentQuestion(1)
+      }, 501)
    }
 
    const handleClick = () => {
@@ -52,8 +53,11 @@ function App() {
    return (
       <>
          <div className='flex min-h-screen items-center justify-center bg-[url("src/assets/grid.avif")] bg-[length:100%_100%] bg-fixed bg-center'>
-            <main className='absolute my-12 flex h-[580px] w-5/6 sm:w-[512px] sm:rounded-xl sm:bg-white'>
-               <div className='flex h-full w-full items-center justify-center sm:px-10 sm:py-8'>
+            <main className='absolute my-12 flex h-[580px] w-5/6 overflow-hidden sm:w-[512px] sm:rounded-xl sm:bg-white'>
+               <div
+                  id='introForm'
+                  className='flex h-full w-full items-center justify-center transition-opacity duration-500 sm:px-10 sm:py-8'
+               >
                   <div className='my-10 flex h-full flex-col items-center justify-between rounded-2xl bg-[rgba(0,0,0,0.5)] py-12 text-gray-200 sm:my-0 sm:bg-[transparent]'>
                      <img
                         src='src/assets/logo.png'
@@ -93,10 +97,15 @@ function App() {
                      </form>
                   </div>
                </div>
-               <Question
-                  question={questions[currentQuestion - 1]}
-                  handleClick={handleClick}
-               />
+               {questions.length > 0 &&
+                  questions.map((question) => (
+                     <Question
+                        key={question.id}
+                        question={question}
+                        position={question.id * 100 - currentQuestion * 100}
+                        handleClick={handleClick}
+                     />
+                  ))}
             </main>
          </div>
       </>
