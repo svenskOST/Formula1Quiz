@@ -34,19 +34,28 @@ function App() {
       setStage(2)
    }
 
+   const handleClick = () => {
+      setCurrentQuestion(currentQuestion + 1)
+   }
+
    return (
       <>
          <div className='flex min-h-screen items-center justify-center bg-[url("src/assets/grid.avif")] bg-[length:100%_100%] bg-fixed bg-center'>
-            <main className='relative my-12 h-[520px] w-5/6 shadow-xl sm:w-[512px] sm:rounded-xl sm:bg-white sm:px-10 sm:py-8'>
+            <main className='my-12 h-[580px] w-5/6 sm:w-[512px] sm:rounded-xl sm:bg-white sm:px-10 sm:py-8'>
                {stage == 1 ? (
                   <form onSubmit={handleSubmit}>
-                     <input type='text' onChange={handleChange} />
-                     <input type='submit' />
+                     <input
+                        type='text'
+                        name='name'
+                        autoComplete='name'
+                        onChange={handleChange}
+                     />
+                     <input type='submit' name='submit' />
                   </form>
                ) : stage == 2 ? (
                   <Question
                      question={questions[currentQuestion - 1]}
-                     handleSubmit={setCurrentQuestion}
+                     handleClick={handleClick}
                   />
                ) : (
                   <ul>

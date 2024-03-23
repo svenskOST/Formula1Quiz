@@ -1,15 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
-  theme: {
-     extend: {
-        screens: {
-           xs: '440px',
-        },
-     },
-     fontFamily: {
-        sans: ['Poppins'],
-     },
-  },
-  plugins: [],
+   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+   theme: {
+      extend: {
+         screens: {
+            xs: '440px',
+         },
+      },
+      fontFamily: {
+         sans: ['Titillium Web'],
+      },
+   },
+   plugins: [],
 }
