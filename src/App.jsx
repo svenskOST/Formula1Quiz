@@ -48,6 +48,10 @@ function App() {
 
    const handleClick = () => {
       setCurrentQuestion(currentQuestion + 1)
+
+      if (currentQuestion == 10) {
+         console.log('Results')
+      }
    }
 
    return (
@@ -92,6 +96,7 @@ function App() {
                            type='submit'
                            name='submit'
                            value='Start'
+                           spellCheck='false'
                            className='w-1/2 cursor-pointer rounded-lg bg-gray-300 py-2 text-xl transition-[background-color,transform] duration-200 hover:bg-gray-400 active:scale-90'
                         />
                      </form>
