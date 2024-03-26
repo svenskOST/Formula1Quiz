@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 function Option({ text, handleClick }) {
    return (
       <button
-         className='w-1/2 rounded-lg bg-gray-300 py-2 text-xl transition-[background-color,transform] duration-200 hover:bg-gray-400 active:scale-90'
+         className='mb-3 w-[46%] rounded-lg bg-gray-300 py-2 text-xl transition-[background-color,transform] duration-200 hover:bg-gray-400 active:scale-90'
          onClick={handleClick}
       >
          {text}
