@@ -21,7 +21,9 @@ function Question({ question, position, handleClick }) {
             {question.options.map((option) => (
                <Option
                   key={option.id}
+                  id={option.id}
                   text={option.text}
+                  answer={question.answer}
                   handleClick={handleClick}
                />
             ))}
