@@ -1,5 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react'
 import Question from './components/Question'
+import HighscoreList from './components/HighscoreList'
 import './index.css'
 
 function App() {
@@ -8,7 +10,7 @@ function App() {
    const [name, setName] = useState('')
    const [notifyName, setNotifyName] = useState(false)
    const [currentQuestion, setCurrentQuestion] = useState(0)
-   const [points, setPoints] = useState(0)
+   const [score, setScore] = useState(0)
    const [highscores, setHighscores] = useState([])
 
    useEffect(() => {
@@ -24,8 +26,9 @@ function App() {
             setCurrentQuestion(1)
          }, 501)
       } else if (stage == 3) {
-         addHighscore()
-         fetchHighscores()
+         addHighscore().then(() => {
+            fetchHighscores()
+         })
 
          const results = document.getElementById('results')
          results.style.display = 'flex'
@@ -38,19 +41,38 @@ function App() {
    const fetchQuestions = async () => {
       try {
          const response = await fetch('src/questions.json')
-         var questions = await response.json()
-         setQuestions(questions)
+         var data = await response.json()
+         setQuestions(data)
       } catch (error) {
          console.error('Error:', error)
       }
    }
 
-   const addHighscore = () => {
-
+   const fetchHighscores = async () => {
+      try {
+         const response = await fetch(
+            'http://localhost:8080/projects/f1-quiz/api.php',
+         )
+         const data = await response.json()
+         setHighscores(data)
+      } catch (error) {
+         console.error('Error:', error)
+      }
    }
 
-   const fetchHighscores = () => {
-      
+   const addHighscore = async () => {
+      try {
+         await fetch('http://localhost:8080/projects/f1-quiz/api.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+               name: name,
+               score: score,
+            }),
+         })
+      } catch (error) {
+         console.error('Error:', error)
+      }
    }
 
    const handleChange = (e) => {
@@ -74,7 +96,7 @@ function App() {
 
    const handleClick = (isCorrect) => {
       if (isCorrect) {
-         setPoints(points + 1)
+         setScore(score + 1)
       }
 
       setCurrentQuestion(currentQuestion + 1)
@@ -85,11 +107,11 @@ function App() {
    }
 
    const setMessage = () => {
-      if (points > 0) {
-         if (points > 3) {
-            if (points > 6) {
-               if (points > 8) {
-                  if (points == 10) {
+      if (score > 0) {
+         if (score > 3) {
+            if (score > 6) {
+               if (score > 8) {
+                  if (score == 10) {
                      return 'Smooth operator'
                   }
                   return 'You know your stuff!'
@@ -169,23 +191,12 @@ function App() {
                         {setMessage()}
                      </h2>
                      <h1 className='text-5xl font-[600] sm:text-[rgb(238,0,0)]'>
-                        {points}/10
+                        {score}/10
                      </h1>
                   </div>
                   <div>
                      <h2>Highscores</h2>
-                     <ol className='text-right'>
-                        <li>1:</li>
-                        <li>2:</li>
-                        <li>3:</li>
-                        <li>4:</li>
-                        <li>5:</li>
-                        <li>6:</li>
-                        <li>7:</li>
-                        <li>8:</li>
-                        <li>9:</li>
-                        <li>10:</li>
-                     </ol>
+                     <HighscoreList highscores={highscores} />
                   </div>
                   <button
                      className='w-1/2 cursor-pointer rounded-lg bg-gray-300 py-2 text-xl text-black transition-[background-color,transform] duration-200 hover:bg-gray-400 active:scale-90'

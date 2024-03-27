@@ -2,7 +2,7 @@
 include_once './dbincludes.php';
 
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, PATCH, POST, DELETE');
+header('Access-Control-Allow-Methods: GET, POST');
 header('Access-Control-Allow-Headers: Content-Type');
 header('Access-Control-Allow-Credentials: true');
 
@@ -25,7 +25,7 @@ switch ($method) {
 
 function handleOptions()
 {
-    header('Access-Control-Allow-Methods: GET, PATCH, POST, DELETE');
+    header('Access-Control-Allow-Methods: GET, POST');
     header('Access-Control-Allow-Headers: Content-Type');
 }
 
@@ -33,23 +33,17 @@ function handleGet(PDO $pdo)
 {
     header('Content-Type: application/json');
 
-    $sql = "SELECT * FROM highscores";
+    $sql = "SELECT id, name, score FROM highscores ORDER BY score DESC, date ASC LIMIT 10";
 
     try {
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        if ($result === TRUE) {
-            http_response_code(200);
-            echo json_encode($result);
-        } else {
-            http_response_code(404);
-            echo json_encode(["error" => "Could not find any highscores"]);
-        }
+        echo json_encode($result);
     } catch (PDOException $e) {
         http_response_code(500);
-        echo "Error: " . $e->getMessage();
+        echo json_encode(["error" => $e->getMessage()]);
     }
 }
 
@@ -60,22 +54,17 @@ function handlePost(PDO $pdo)
     $name = filter_var($data->name, FILTER_DEFAULT);
     $score = filter_var($data->score, FILTER_VALIDATE_INT);
 
-    if ($name && $score) {
+    if (isset($name) && isset($score)) {
         $sql = "INSERT INTO highscores (name, score) VALUES (:name, :score)";
 
         try {
             $stmt = $pdo->prepare($sql);
             $stmt->bindParam(':name', $name, PDO::PARAM_STR);
             $stmt->bindParam(':score', $score, PDO::PARAM_INT);
-            $result = $stmt->execute();
-
-            if ($result === TRUE) {
-                http_response_code(200);
-                echo json_encode(["message" => "Operation succeeded"]);
-            }
+            $stmt->execute();
         } catch (PDOException $e) {
             http_response_code(500);
-            echo "Error: " . $e->getMessage();
+            echo json_encode(["error" => $e->getMessage()]);
         }
     } else {
         http_response_code(400);

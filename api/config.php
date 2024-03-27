@@ -1,8 +1,8 @@
 <?php
-define('host', 'localhost');
-define('dbname', 'f1_quiz');
-define('username', 'root');
-define('password', '');
+$host = "localhost";
+$dbname = "f1_quiz";
+$username = "root";
+$password = "";
 
 /*
 define('host', 'kreativlink.se.mysql');
