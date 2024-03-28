@@ -1,18 +1,19 @@
 import PropTypes from 'prop-types'
 
 function HighscoreList({ highscores }) {
-   const highscoreItems = Array.from({ length: 10 }, (_, index) => {
-      const highscore = highscores.find((score) => score.id === index + 1)
-      if (highscore) {
-         return (
-            <li key={highscore.id}>
-               {`${highscore.id}: ${highscore.name} (${highscore.score})`}
-            </li>
+   const highscoreItems = []
+
+   for (let i = 0; i < 10; i++) {
+      if (highscores[i]) {
+         highscoreItems.push(
+            <li key={i}>
+               {`${i + 1}: ${highscores[i].name} (${highscores[i].score})`}
+            </li>,
          )
       } else {
-         return <li key={index + 1}>{`${index + 1}: Score not set`}</li>
+         highscoreItems.push(<li key={i}>{`${i + 1}: Score not set`}</li>)
       }
-   })
+   }
 
    return <ol>{highscoreItems}</ol>
 }

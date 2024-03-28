@@ -13,10 +13,10 @@ switch ($method) {
         handleOptions();
         break;
     case 'GET':
-        handleGet($pdo);
+        handleGet();
         break;
     case 'POST':
-        handlePost($pdo);
+        handlePost();
         break;
     default:
         http_response_code(405);
@@ -29,45 +29,98 @@ function handleOptions()
     header('Access-Control-Allow-Headers: Content-Type');
 }
 
-function handleGet(PDO $pdo)
+function handleGet()
 {
     header('Content-Type: application/json');
 
-    $sql = "SELECT id, name, score FROM highscores ORDER BY score DESC, date ASC LIMIT 10";
-
-    try {
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        echo json_encode($result);
-    } catch (PDOException $e) {
-        http_response_code(500);
-        echo json_encode(["error" => $e->getMessage()]);
-    }
+    echo json_encode(dbAction(
+        "SELECT name, score, date FROM highscores ORDER BY score DESC, date ASC LIMIT 10",
+        [],
+        true
+    )->fetchAll(PDO::FETCH_ASSOC));
 }
 
-function handlePost(PDO $pdo)
+function handlePost()
 {
     $data = json_decode(file_get_contents("php://input"));
 
     $name = filter_var($data->name, FILTER_DEFAULT);
     $score = filter_var($data->score, FILTER_VALIDATE_INT);
 
-    if (isset($name) && isset($score)) {
-        $sql = "INSERT INTO highscores (name, score) VALUES (:name, :score)";
+    if ($name && $score) {
+        $nameDuplicate = dbAction(
+            "SELECT id FROM highscores WHERE name = :name AND score < :score",
+            [[':name', $name, PDO::PARAM_STR], [':score', $score, PDO::PARAM_INT]],
+            true
+        )->fetchColumn();
 
-        try {
-            $stmt = $pdo->prepare($sql);
-            $stmt->bindParam(':name', $name, PDO::PARAM_STR);
-            $stmt->bindParam(':score', $score, PDO::PARAM_INT);
-            $stmt->execute();
-        } catch (PDOException $e) {
-            http_response_code(500);
-            echo json_encode(["error" => $e->getMessage()]);
+        if ($nameDuplicate) {
+            dbAction(
+                "UPDATE highscores SET score = :score WHERE id = :id",
+                [[':score', $score, PDO::PARAM_INT], [':id', $nameDuplicate, PDO::PARAM_INT]]
+            );
+
+            echo json_encode(["message" => "Updated the score of " . $name . " to " . $score]);
+        } else {
+            $rows = dbAction(
+                "SELECT COUNT(*) AS count FROM highscores",
+                [],
+                true
+            )->fetch(PDO::FETCH_ASSOC)['count'];
+
+            if ($rows < 10) {
+                dbAction(
+                    "INSERT INTO highscores (name, score) VALUES (:name, :score)",
+                    [[':name', $name, PDO::PARAM_STR], [':score', $score, PDO::PARAM_INT]]
+                );
+
+                echo json_encode(["message" => "Added new highscore"]);
+            } else {
+                $lowestRanking = dbAction(
+                    "SELECT id FROM highscores ORDER BY score ASC, date DESC LIMIT 1",
+                    [[':score', $score, PDO::PARAM_INT]],
+                    true
+                )->fetchColumn();
+
+                if ($score > $lowestRanking) {
+                    dbAction(
+                        "UPDATE highscores SET name = :name, score = :score WHERE id = :id",
+                        [[':name', $name, PDO::PARAM_STR], [':score', $score, PDO::PARAM_INT], [':id', $lowestRanking]]
+                    );
+
+                    echo json_encode(["message" => "Replaced a highscore with new highscore"]);
+                }
+            }
         }
     } else {
         http_response_code(400);
-        echo json_encode(["error" => "Invalid data"]);
+        echo json_encode(["error" => "Data for name or score is missing"]);
+    }
+}
+
+function dbAction(string $sql, array $bindings = [], bool $returnStmt = false)
+{
+    global $pdo;
+
+    try {
+        $stmt = $pdo->prepare($sql);
+
+        if ($bindings) {
+            for ($i = 0; $i < count($bindings); $i++) {
+                $b = $bindings[$i];
+                $stmt->bindParam($b[0], $b[1], $b[2]);
+            }
+        }
+
+        $stmt->execute();
+
+        if ($returnStmt) {
+            return $stmt;
+        }
+    } catch (PDOException $e) {
+        http_response_code(500);
+        echo json_encode(["error" => $e->getMessage()]);
+
+        return false;
     }
 }

@@ -7,7 +7,7 @@ import './index.css'
 function App() {
    const [stage, setStage] = useState(1)
    const [questions, setQuestions] = useState([])
-   const [name, setName] = useState('')
+   const [name, setName] = useState()
    const [notifyName, setNotifyName] = useState(false)
    const [currentQuestion, setCurrentQuestion] = useState(0)
    const [score, setScore] = useState(0)

@@ -1,0 +1,3 @@
+- Tooltip/hover för att se datumet som highscoret sattes
+
+- Error när en ny score ska slå ut en äldre

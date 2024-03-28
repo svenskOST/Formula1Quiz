@@ -1,5 +1,0 @@
-- Om namn är samma som ett existerande, byt ut denna i databasen
-
-- Ska var max 10 i databasen, alltså ta bort om någon åker utanför topp 10
-
-- Lägg till i databasen och sortera efter först poäng och sedan timestamp om de har samma poäng
