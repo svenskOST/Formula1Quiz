@@ -1,3 +1,7 @@
+FIXED Error när en ny score ska slå ut en äldre
+
 - Tooltip/hover för att se datumet som highscoret sattes
 
-- Error när en ny score ska slå ut en äldre
+- Fixa UI för highscoresidan
+
+- Ge feedback på när en fråga är korrekt eller fel och en text-knapp (Next ->) för att gå vidare

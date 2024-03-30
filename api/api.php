@@ -77,15 +77,15 @@ function handlePost()
                 echo json_encode(["message" => "Added new highscore"]);
             } else {
                 $lowestRanking = dbAction(
-                    "SELECT id FROM highscores ORDER BY score ASC, date DESC LIMIT 1",
-                    [[':score', $score, PDO::PARAM_INT]],
+                    "SELECT score, id FROM highscores ORDER BY score ASC, date DESC LIMIT 1",
+                    [],
                     true
-                )->fetchColumn();
+                )->fetchObject();
 
-                if ($score > $lowestRanking) {
+                if ($score > $lowestRanking->score) {
                     dbAction(
                         "UPDATE highscores SET name = :name, score = :score WHERE id = :id",
-                        [[':name', $name, PDO::PARAM_STR], [':score', $score, PDO::PARAM_INT], [':id', $lowestRanking]]
+                        [[':name', $name, PDO::PARAM_STR], [':score', $score, PDO::PARAM_INT], [':id', $lowestRanking->id, PDO::PARAM_INT]]
                     );
 
                     echo json_encode(["message" => "Replaced a highscore with new highscore"]);
