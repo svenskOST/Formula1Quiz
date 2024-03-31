@@ -128,7 +128,7 @@ function App() {
    return (
       <>
          <div className='flex min-h-screen items-center justify-center bg-[url("src/assets/grid.avif")] bg-[length:100%_100%] bg-fixed bg-center'>
-            <main className='absolute my-12 flex h-[580px] max-h-full w-5/6 overflow-x-hidden sm:w-[512px] sm:rounded-xl sm:bg-white'>
+            <main className='absolute my-12 flex h-[580px] w-[90%] overflow-hidden sm:w-[512px] sm:rounded-xl sm:bg-white'>
                <div
                   id='introForm'
                   className='flex h-full w-full items-center justify-center transition-opacity duration-500 sm:px-10 sm:py-8'
@@ -158,17 +158,17 @@ function App() {
                            spellCheck='false'
                            onChange={handleChange}
                            placeholder='Enter your name'
-                           className={`mb-6 w-full rounded-lg bg-gray-300 py-2 text-center text-xl outline-none ${
+                           className={`mb-6 w-full rounded-lg py-2 text-center text-xl outline-none ${
                               notifyName
                                  ? 'animate-pulse bg-red-200 placeholder-red-500'
-                                 : ''
+                                 : 'bg-slate-200'
                            }`}
                         />
                         <input
                            type='submit'
                            name='submit'
                            value='Start'
-                           className='w-1/2 cursor-pointer rounded-lg bg-gray-300 py-2 text-xl transition-[background-color,transform] duration-200 hover:bg-gray-400 active:scale-90'
+                           className='w-1/2 cursor-pointer rounded-lg bg-slate-200 py-2 text-xl transition-[background-color,transform] duration-200 hover:bg-slate-300 active:scale-90'
                         />
                      </form>
                   </div>
@@ -184,7 +184,7 @@ function App() {
                   ))}
                <div
                   id='results'
-                  className='my-10 hidden h-full w-full flex-col items-center justify-evenly rounded-2xl bg-[rgba(0,0,0,0.5)] py-12 text-gray-200 opacity-0 transition-opacity duration-500 sm:my-0 sm:justify-between sm:bg-[transparent] sm:px-10 sm:py-8 sm:text-black'
+                  className='my-6 hidden h-full w-full flex-col items-center justify-evenly rounded-2xl bg-[rgba(0,0,0,0.5)] px-10 py-12 text-gray-200 opacity-0 transition-opacity duration-500 sm:my-0 sm:justify-between sm:bg-[transparent] sm:py-10 sm:text-black'
                >
                   <div className='text-center'>
                      <h2 className='mb-4 text-3xl font-[500] sm:text-black'>
@@ -194,12 +194,9 @@ function App() {
                         {score}/10
                      </h1>
                   </div>
-                  <div>
-                     <h2>Highscores</h2>
-                     <HighscoreList highscores={highscores} />
-                  </div>
+                  <HighscoreList highscores={highscores} />
                   <button
-                     className='w-1/2 cursor-pointer rounded-lg bg-gray-300 py-2 text-xl text-black transition-[background-color,transform] duration-200 hover:bg-gray-400 active:scale-90'
+                     className='w-1/2 cursor-pointer rounded-lg bg-slate-200 py-2 text-xl text-black transition-[background-color,transform] duration-200 hover:bg-slate-300 active:scale-90'
                      onClick={() => {
                         location.reload()
                      }}

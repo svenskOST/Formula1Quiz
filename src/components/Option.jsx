@@ -5,7 +5,7 @@ function Option({ id, text, answer, handleClick }) {
 
    return (
       <button
-         className='mb-3 w-[46%] rounded-lg bg-gray-300 py-2 text-xl transition-[background-color,transform] duration-200 hover:bg-gray-400 active:scale-90'
+         className='mb-3 w-[46%] rounded-lg bg-slate-200 py-2 text-xl transition-[background-color,transform] duration-200 hover:bg-slate-300 active:scale-90'
          onClick={() => handleClick(isCorrect)}
       >
          {text}
