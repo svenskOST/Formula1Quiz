@@ -8,9 +8,14 @@ function HighscoreList({ highscores }) {
    for (let i = 0; i < 10; i++) {
       if (highscores[i]) {
          highscoreItems.push(
-            <tr key={i} className='odd:bg-slate-100 even:bg-slate-200'>
+            <tr key={i} className='group odd:bg-slate-100 even:bg-slate-200'>
                <td>{i + 1}</td>
-               <td>{highscores[i].name}</td>
+               <td className='flex h-full items-center justify-center'>
+                  {highscores[i].name}{' '}
+                  <span className='absolute w-32 -translate-y-3/4 rounded-md bg-gray-600 px-2 py-1 text-slate-100 opacity-0 transition-opacity duration-300 group-hover:opacity-100'>
+                     {highscores[i].date}
+                  </span>
+               </td>
                <td>{highscores[i].score}</td>
             </tr>,
          )
