@@ -11,8 +11,8 @@ function HighscoreList({ highscores }) {
             <tr key={i} className='group odd:bg-slate-100 even:bg-slate-200'>
                <td>{i + 1}</td>
                <td className='flex h-full items-center justify-center'>
-                  {highscores[i].name}{' '}
-                  <span className='absolute w-32 -translate-y-3/4 rounded-md bg-gray-600 px-2 py-1 text-slate-100 opacity-0 transition-opacity duration-300 group-hover:opacity-100'>
+                  {highscores[i].name}
+                  <span className='absolute w-32 -translate-y-[90%] select-none rounded-md bg-gray-600 px-2 py-1 text-slate-100 opacity-0 transition-opacity duration-300 after:absolute after:left-1/2 after:top-full after:-ml-[12px] after:-mt-[2px] after:border-[12px] after:border-[rgb(75,85,99)_transparent_transparent_transparent] group-hover:opacity-100'>
                      {highscores[i].date}
                   </span>
                </td>
