@@ -1,12 +1,5 @@
 <?php
-$host = "localhost";
-$dbname = "f1_quiz";
-$username = "root";
+$host = "kreativlink.se.mysql";
+$dbname = "kreativlink_sealexander";
+$username = "kreativlink_sealexander";
 $password = "";
-
-/*
-define('host', 'kreativlink.se.mysql');
-define('dbname', 'kreativlink_sealexander');
-define('username', 'kreativlink_sealexander');
-define('password', '');
-*/

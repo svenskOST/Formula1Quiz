@@ -12,7 +12,7 @@ function Question({ id, question, position, handleClick, buttonsDisabled }) {
          </h1>
          <div className='mb-10 mt-6 flex h-3/5 items-center justify-center'>
             <img
-               src={`src/assets/${question.img}`}
+               src={`assets/img/${question.img}`}
                alt={'File "' + question.img + '" not found'}
                className='max-h-full rounded-xl shadow-lg shadow-[rgba(0,0,0,0.8)]'
             />

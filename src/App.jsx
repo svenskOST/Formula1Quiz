@@ -41,7 +41,7 @@ function App() {
 
    const fetchQuestions = async () => {
       try {
-         const response = await fetch('src/questions.json')
+         const response = await fetch('assets/questions.json')
          var data = await response.json()
          setQuestions(data)
       } catch (error) {
@@ -52,7 +52,7 @@ function App() {
    const fetchHighscores = async () => {
       try {
          const response = await fetch(
-            'http://localhost:8080/projects/f1-quiz/api.php',
+            'https://elevsidor.kreativlink.se/aw/arskurs-3/f1-quiz/api/api.php',
          )
          const data = await response.json()
          setHighscores(data)
@@ -63,7 +63,7 @@ function App() {
 
    const addHighscore = async () => {
       try {
-         await fetch('http://localhost:8080/projects/f1-quiz/api.php', {
+         await fetch('https://elevsidor.kreativlink.se/aw/arskurs-3/f1-quiz/api/api.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -96,7 +96,9 @@ function App() {
    }
 
    const handleClick = (id, answer) => {
-      const currentOptions = document.getElementById(`options${currentQuestion}`)
+      const currentOptions = document.getElementById(
+         `options${currentQuestion}`,
+      )
       const options = currentOptions.getElementsByTagName('button')
       console.log(currentOptions)
 
@@ -153,7 +155,7 @@ function App() {
                >
                   <div className='my-10 flex h-full flex-col items-center justify-evenly rounded-2xl bg-[rgba(0,0,0,0.5)] py-12 text-gray-200 sm:my-0 sm:justify-between sm:bg-[transparent]'>
                      <img
-                        src='src/assets/logo.png'
+                        src='assets/img/logo.png'
                         alt='File "logo.png" not found'
                         className='w-5/6 drop-shadow-[3px_3px_5px_rgba(0,0,0,0.5)]'
                      ></img>
