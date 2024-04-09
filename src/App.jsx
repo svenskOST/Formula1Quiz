@@ -100,7 +100,6 @@ function App() {
          `options${currentQuestion}`,
       )
       const options = currentOptions.getElementsByTagName('button')
-      console.log(currentOptions)
 
       if (id == answer) {
          setScore(score + 1)
