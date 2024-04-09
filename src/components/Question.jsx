@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import Option from './Option'
 
-function Question({ question, position, handleClick }) {
+function Question({ id, question, position, handleClick, buttonsDisabled }) {
    return (
       <div
          className='absolute flex h-full w-full flex-col items-center justify-center transition-transform duration-500 sm:px-10 sm:pb-8 sm:pt-10'
@@ -17,7 +17,10 @@ function Question({ question, position, handleClick }) {
                className='max-h-full rounded-xl shadow-lg shadow-[rgba(0,0,0,0.8)]'
             />
          </div>
-         <div className='flex w-full flex-wrap justify-evenly'>
+         <div
+            id={'options' + id}
+            className='flex w-full flex-wrap justify-evenly'
+         >
             {question.options.map((option) => (
                <Option
                   key={option.id}
@@ -25,6 +28,7 @@ function Question({ question, position, handleClick }) {
                   text={option.text}
                   answer={question.answer}
                   handleClick={handleClick}
+                  buttonsDisabled={buttonsDisabled}
                />
             ))}
          </div>
@@ -33,9 +37,11 @@ function Question({ question, position, handleClick }) {
 }
 
 Question.propTypes = {
+   id: PropTypes.number,
    question: PropTypes.object,
    position: PropTypes.number,
    handleClick: PropTypes.func,
+   buttonsDisabled: PropTypes.bool,
 }
 
 export default Question

@@ -11,6 +11,7 @@ function App() {
    const [notifyName, setNotifyName] = useState(false)
    const [currentQuestion, setCurrentQuestion] = useState(0)
    const [score, setScore] = useState(0)
+   const [buttonsDisabled, setButtonsDisabled] = useState(false)
    const [highscores, setHighscores] = useState([])
 
    useEffect(() => {
@@ -94,11 +95,28 @@ function App() {
       setStage(2)
    }
 
-   const handleClick = (isCorrect) => {
-      if (isCorrect) {
+   const handleClick = (id, answer) => {
+      const currentOptions = document.getElementById(`options${currentQuestion}`)
+      const options = currentOptions.getElementsByTagName('button')
+      console.log(currentOptions)
+
+      if (id == answer) {
          setScore(score + 1)
+         options[id - 1].style.backgroundColor = 'rgb(134 239 172)'
+      } else {
+         options[id - 1].style.backgroundColor = 'rgb(252 165 165)'
+         options[answer - 1].style.backgroundColor = 'rgb(134 239 172)'
       }
 
+      setButtonsDisabled(true)
+
+      setTimeout(() => {
+         proceed()
+      }, 1000)
+   }
+
+   const proceed = () => {
+      setButtonsDisabled(false)
       setCurrentQuestion(currentQuestion + 1)
 
       if (currentQuestion == 10) {
@@ -177,9 +195,11 @@ function App() {
                   questions.map((question) => (
                      <Question
                         key={question.id}
+                        id={question.id}
                         question={question}
                         position={question.id * 100 - currentQuestion * 100}
                         handleClick={handleClick}
+                        buttonsDisabled={buttonsDisabled}
                      />
                   ))}
                <div
