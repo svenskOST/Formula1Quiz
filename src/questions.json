@@ -2,7 +2,7 @@
    {
       "id": 1,
       "question": "Who is this?",
-      "img": "question1.avif",
+      "img": "question1.jpg",
       "options": [
          {
             "id": 1,
@@ -74,7 +74,7 @@
    {
       "id": 4,
       "question": "What is this track called?",
-      "img": "question4.avif",
+      "img": "question4.jpg",
       "options": [
          {
             "id": 1,
@@ -146,7 +146,7 @@
    {
       "id": 7,
       "question": "Where did Ayrton Senna come from?",
-      "img": "question7.avif",
+      "img": "question7.jpg",
       "options": [
          {
             "id": 1,

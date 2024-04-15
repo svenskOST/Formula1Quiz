@@ -146,7 +146,7 @@ function App() {
 
    return (
       <>
-         <div className='flex min-h-screen items-center justify-center bg-[url("img/grid.avif")] bg-[length:100%_100%] bg-fixed bg-center'>
+         <div className='flex min-h-screen items-center justify-center bg-[url("img/grid.jpg")] bg-[length:100%_100%] bg-fixed bg-center'>
             <main className='absolute my-12 flex h-[580px] w-[90%] overflow-hidden sm:w-[512px] sm:rounded-xl sm:bg-white'>
                <div
                   id='introForm'
